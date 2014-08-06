@@ -33,7 +33,9 @@
 		var canvas = document.createElement('canvas');
 
 		if (!!(canvas.getContext && canvas.getContext('2d')) === false)
-			return this._imgTag ? this._element.src = this._url : this._element.style.backgroundImage = 'url(' + this._url + ')';
+			return this._imgTag ?
+				this._element.src = this._url :
+					this._element.style.backgroundImage = 'url(' + this._url + ')';
 
 		var img = new Image();
 		img.crossOrigin = 'Anonymous';
