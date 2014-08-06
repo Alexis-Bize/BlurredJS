@@ -78,6 +78,11 @@
 		};
 	};
 	
+	Blurred.prototype.destroy = function() {
+		if (!!this._element)
+			this._element.style.backgroundImage = '';
+	};
+	
 	// AMD / CommonJS stuff
 	if (typeof define === "function" && !!define.amd)
 		define(function() { return Blurred; });
