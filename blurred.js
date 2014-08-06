@@ -1,43 +1,44 @@
 (function() {
-	
+
 	var allowedMimeTypes = [
 		'image/jpeg',
 		'image/png',
 		'image/gif'
 	];
-	
+
 	var Blurred = function(element) {
 		this._element = element;
-		this._blurStrength = 5;
-		this._url = this._element.getAttribute('data-blur');
+		this._imgTag = !!(this._element.tagName === 'IMG');
+		this._url = this._element.getAttribute(this._imgTag ? 'src' : 'data-src');
 		this._mimeType = allowedMimeTypes[0];
+		this._blurStrength = 5;
 	};
-	
-	Blurred.prototype.setBlurStrength = function(blur) { 
+
+	Blurred.prototype.setBlurStrength = function(blur) {
 		this._blurStrength = parseInt(blur, 10);
 		return this;
 	};
-	
-	Blurred.prototype.setMimeType = function(mime) { 
-		this._mimeType = (!!~allowedMimeTypes.indexOf(mime)) ? mime : this._mimeType; 
+
+	Blurred.prototype.setMimeType = function(mime) {
+		this._mimeType = (!!~allowedMimeTypes.indexOf(mime)) ? mime : this._mimeType;
 		return this;
 	};
-	
+
 	Blurred.prototype.setUrl = function(url) {
-		this._url = url || this._element.getAttribute('data-blur') || this._url;
+		this._url = url || this._element.getAttribute(this._imgTag ? 'src' : 'data-src');
 		return this;
 	};
-	
+
 	Blurred.prototype.render = function() {
 		var canvas = document.createElement('canvas');
 
 		if (!!(canvas.getContext && canvas.getContext('2d')) === false)
-			return this._element.style.backgroundImage = 'url(' + ImgUrl + ')';
+			return this._imgTag ? this._element.src = this._url : this._element.style.backgroundImage = 'url(' + this._url + ')';
 
 		var img = new Image();
 		img.crossOrigin = 'Anonymous';
 		img.src = this._url;
-		
+
 		var self = this;
 
 		img.onload = function()
@@ -74,21 +75,25 @@
 			var base64 = context.canvas.toDataURL(self._mimeType);
 			document.body.removeChild(canvas);
 
-			return self._element.style.backgroundImage = 'url(' + base64 + ')';
+			return self._imgTag ?
+				self._element.src = base64 :
+					self._element.style.backgroundImage = 'url(' + base64 + ')';
 		};
 	};
-	
+
 	Blurred.prototype.destroy = function() {
 		if (!!this._element)
-			this._element.style.backgroundImage = '';
+			this._imgTag ?
+				this._element.src = this._url :
+					this._element.style.backgroundImage = this._url;
 	};
-	
+
 	// AMD / CommonJS stuff
-	if (typeof define === "function" && !!define.amd)
+	if (typeof define === 'function' && !!define.amd)
 		define(function() { return Blurred; });
-	else if (typeof module === "object" && !!module && typeof module.exports === "object" && !!module.exports)
+	else if (typeof module === 'object' && !!module && typeof module.exports === 'object' && !!module.exports)
 		module.exports = Blurred;
 	else
-		window.Blurred = Blurred;	
+		window.Blurred = Blurred;
 
 })();
