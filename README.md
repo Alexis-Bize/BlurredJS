@@ -16,7 +16,7 @@ var myBlurredElement = new Blurred(document.getElementById('such-doge'));
 // Blur radius/strength setting
 myBlurredElement.setBlurStrength(3); 
 
-// If there's no data-blur attribute on your element or if you want to force the url, you can do it here
+// If there's no data-src attribute on your element or if you want to force the url, you can do it here
 myBlurredElement.setUrl('http://wowsuchdoge.com/'); 
 
 // Set mime type for better results
