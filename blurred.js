@@ -74,7 +74,7 @@
 				{
 					context.drawImage(canvas, x, y);
 					if (x >= 0 && y >= 0)
-						context.drawImage(canvas, -(x - 1), -(y - 1));
+						context.drawImage(canvas, -(x - 2.5), -(y - 2.5));
 				}
 			}
 
