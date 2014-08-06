@@ -23,6 +23,9 @@ myBlurredElement.setMimeType('image/png');
 // Perform rendering
 myBlurredElement.render();
 
+// Destroy blurred image
+myBlurredElement.destroy();
+
 /* 
 
 All calls, except render(), are chainable.
