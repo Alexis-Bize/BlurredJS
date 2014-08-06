@@ -1,5 +1,7 @@
 # JavaScript canvas-based image blurring engine
 
+![alt tag](https://pbs.twimg.com/media/BuW9CdaIIAEM9N_.png:large)
+
 ## Installation
 
 You can load it via AMD, CommonJS or the object will be available on the Blurred global variable
