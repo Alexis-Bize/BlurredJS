@@ -1,3 +1,9 @@
+/*
+ * BlurredJS - 1.0
+ * @author: Alexis (@_SuckMyLuck) Bize / Mathieu (@OtaK_) Amiot
+ * @about: JavaScript canvas-based image blurring engine
+ */
+
 (function() {
 
 	var allowedMimeTypes = [
