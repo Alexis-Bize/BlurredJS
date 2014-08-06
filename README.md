@@ -17,7 +17,7 @@ var myBlurredElement = new Blurred(document.getElementById('such-doge'));
 myBlurredElement.setBlurStrength(3); 
 
 // If there's no data-src attribute on your element or if you want to force the url, you can do it here
-myBlurredElement.setUrl('http://wowsuchdoge.com/'); 
+myBlurredElement.setUrl('http://wowsuchdoge.com/swag.jpg'); 
 
 // Set mime type for better results
 myBlurredElement.setMimeType('image/png');
@@ -34,7 +34,7 @@ All calls, except render(), are chainable.
 That way you can do 
   myBlurredElement
     .setBlurStrength(3)
-    .setUrl('http://yolo.com/')
+    .setUrl('http://yolo.com/dickbutt.jpg')
     .setMimeType('image/jpeg')
     .render();
     
