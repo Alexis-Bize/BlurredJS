@@ -1,5 +1,5 @@
 /*
- * BlurredJS - 1.0
+ * BlurredJS - 1.0.1
  * @author: Alexis (@_SuckMyLuck) Bize / Mathieu (@OtaK_) Amiot
  * @about: JavaScript canvas-based image blurring engine
  */
@@ -15,7 +15,7 @@
 	var Blurred = function(element) {
 		this._element = element;
 		this._imgTag = !!(this._element.tagName === 'IMG');
-		this._url = this._element.getAttribute(this._imgTag ? 'src' : 'data-src');
+		this._url = this._element.getAttribute(this._imgTag ? 'src' : 'data-blurred');
 		this._mimeType = allowedMimeTypes[0];
 		this._blurStrength = 5;
 	};
@@ -31,7 +31,7 @@
 	};
 
 	Blurred.prototype.setUrl = function(url) {
-		this._url = url || this._element.getAttribute(this._imgTag ? 'src' : 'data-src');
+		this._url = url || this._element.getAttribute(this._imgTag ? 'src' : 'data-blurred');
 		return this;
 	};
 
@@ -80,7 +80,10 @@
 
 			context.globalAlpha = 1.0;
 
-			var base64 = context.canvas.toDataURL(self._mimeType);
+			var base64;
+			try { base64 = context.canvas.toDataURL(self._mimeType); }
+			catch (e) { base64 = self._url; }
+			
 			document.body.removeChild(canvas);
 
 			return self._imgTag ?
