@@ -44,7 +44,9 @@ That way you can do
     .setBlurStrength(3)
     .setUrl('http://yolo.com/dickbutt.jpg')
     .setMimeType('image/jpeg')
-    .render();
+    .setCallback(function() {
+        console.log(this.getProps(['imgContainer']);
+    }).render();
     
 */
 
