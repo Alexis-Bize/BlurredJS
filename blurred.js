@@ -1,7 +1,12 @@
 /*
- * BlurredJS - 1.0.1
+ * BlurredJS - 1.0.2
  * @author: Alexis (@_SuckMyLuck) Bize / Mathieu (@OtaK_) Amiot
  * @about: JavaScript canvas-based image blurring engine
+ * @changelog
+ *    1.0.2 - callback support
+            - getProps prototype
+ *    1.0.1 : toDataURL fallback
+ *    1.0.0 : Initial release
  */
 
 (function() {
@@ -18,6 +23,10 @@
 		this._url = this._element.getAttribute(this._imgTag ? 'src' : 'data-blurred');
 		this._mimeType = allowedMimeTypes[0];
 		this._blurStrength = 5;
+		this._imgContainer = null;
+		this._callback = function() {
+			return;
+		};
 	};
 
 	Blurred.prototype.setBlurStrength = function(blur) {
@@ -31,7 +40,12 @@
 	};
 
 	Blurred.prototype.setUrl = function(url) {
-		this._url = url || this._element.getAttribute(this._imgTag ? 'src' : 'data-blurred');
+		this._url = url;
+		return this;
+	};
+
+	Blurred.prototype.setCallback = function(callback) {
+		this._callback = typeof callback === 'function' ? callback() : this._callback;
 		return this;
 	};
 
@@ -39,9 +53,13 @@
 		var canvas = document.createElement('canvas');
 
 		if (!!(canvas.getContext && canvas.getContext('2d')) === false)
-			return this._imgTag ?
+		{
+			this._imgTag ?
 				this._element.src = this._url :
 					this._element.style.backgroundImage = 'url(' + this._url + ')';
+
+			return this._callback;
+		}
 
 		var img = new Image();
 		img.crossOrigin = 'Anonymous';
@@ -51,6 +69,8 @@
 
 		img.onload = function()
 		{
+			self._imgContainer = this;
+
 			var iw = this.width,
 				ih = this.height;
 
@@ -83,13 +103,31 @@
 			var base64;
 			try { base64 = context.canvas.toDataURL(self._mimeType); }
 			catch (e) { base64 = self._url; }
-			
+
 			document.body.removeChild(canvas);
 
-			return self._imgTag ?
+			self._imgTag ?
 				self._element.src = base64 :
 					self._element.style.backgroundImage = 'url(' + base64 + ')';
+
+			return this._callback;
 		};
+	};
+
+	Blurred.prototype.getProps = function(obj) {
+		if (!!this._element)
+		{
+			if (obj !== Object(obj))
+				return;
+
+			var props = {};
+
+			for (var i in obj)
+				if (!!this.hasOwnProperty('_' + obj[i]) && obj[i] !== 'callback')
+					props[obj[i]] = this['_' + obj[i]];
+
+			return props;
+		}
 	};
 
 	Blurred.prototype.destroy = function() {
