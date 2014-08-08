@@ -45,7 +45,7 @@
 	};
 
 	Blurred.prototype.setCallback = function(callback) {
-		this._callback = typeof callback === 'function' ? callback() : this._callback;
+		this._callback = typeof callback === 'function' ? callback : this._callback;
 		return this;
 	};
 
@@ -58,7 +58,7 @@
 				this._element.src = this._url :
 					this._element.style.backgroundImage = 'url(' + this._url + ')';
 
-			return this._callback;
+			return this._callback();
 		}
 
 		var img = new Image();
@@ -110,7 +110,7 @@
 				self._element.src = base64 :
 					self._element.style.backgroundImage = 'url(' + base64 + ')';
 
-			return this._callback;
+			return self._callback();
 		};
 	};
 
