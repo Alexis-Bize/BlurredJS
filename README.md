@@ -22,8 +22,16 @@ myBlurredElement.setUrl('http://wowsuchdoge.com/swag.jpg');
 // Set mime type for better results
 myBlurredElement.setMimeType('image/png');
 
+// Set callback function
+myBlurredElement.callback(function() {
+    // Hello world
+});
+
 // Perform rendering
 myBlurredElement.render();
+
+// Get used properties (element, url, mimeType, blurStrength)
+myBlurredElement.getProps(['url', 'blurStrength']);
 
 // Destroy blurred image
 myBlurredElement.destroy();
