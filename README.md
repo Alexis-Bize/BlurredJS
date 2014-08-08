@@ -23,7 +23,7 @@ myBlurredElement.setUrl('http://wowsuchdoge.com/swag.jpg');
 myBlurredElement.setMimeType('image/png');
 
 // Set callback function
-myBlurredElement.callback(function() {
+myBlurredElement.setCallback(function() {
     // Hello world
 });
 
