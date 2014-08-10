@@ -13,8 +13,7 @@
 
 	var allowedMimeTypes = [
 		'image/jpeg',
-		'image/png',
-		'image/gif'
+		'image/png'
 	];
 
 	var Blurred = function(element) {
