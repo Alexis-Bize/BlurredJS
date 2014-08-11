@@ -1,6 +1,6 @@
 # JavaScript canvas-based image blurring engine
 
-![alt tag](https://pbs.twimg.com/media/BuW9CdaIIAEM9N_.png:large)
+![alt tag](http://s17.postimg.org/rdme1nyrj/Capture_d_cran_2014_08_11_21_39_17.png)
 
 ## Installation
 
