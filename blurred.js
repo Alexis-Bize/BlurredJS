@@ -1,8 +1,9 @@
 /*
- * BlurredJS - 1.0.2
+ * BlurredJS - 1.0.3
  * @author: Alexis (@_SuckMyLuck) Bize / Mathieu (@OtaK_) Amiot
  * @about: JavaScript canvas-based image blurring engine
  * @changelog
+ *    1.0.3 - getProps updated : String allowed
  *    1.0.2 - callback support
             - getProps prototype
  *    1.0.1 : toDataURL fallback
@@ -117,15 +118,17 @@
 		if (!!this._element)
 		{
 			if (obj !== Object(obj))
-				return;
+				obj = [(obj || '').toString()];
 
 			var props = {};
 
 			for (var i in obj)
-				if (!!this.hasOwnProperty('_' + obj[i]) && obj[i] !== 'callback')
+				if (!!this.hasOwnProperty('_' + obj[i]))
 					props[obj[i]] = this['_' + obj[i]];
 
-			return props;
+			return Object.keys(props).length === 1 && obj.length === 1 ?
+				props[obj[0]] :
+					props;
 		}
 	};
 
