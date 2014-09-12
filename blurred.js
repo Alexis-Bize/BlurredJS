@@ -1,9 +1,11 @@
 /*
- * BlurredJS - 1.0.3
+ * BlurredJS - 1.0.4
  * @author: Alexis (@_SuckMyLuck) Bize / Mathieu (@OtaK_) Amiot
  * @about: JavaScript canvas-based image blurring engine
  * @changelog
- *    1.0.3 - getProps updated : String allowed
+ *    1.0.4 - canvas rendering optimization
+            - image onLoad error fallback
+ *    1.0.3 : getProps updated
  *    1.0.2 - callback support
             - getProps prototype
  *    1.0.1 : toDataURL fallback
@@ -24,6 +26,7 @@
 		this._mimeType = allowedMimeTypes[0];
 		this._blurStrength = 5;
 		this._imgContainer = null;
+		this._loadError = false;
 		this._callback = function() {
 			return;
 		};
@@ -67,6 +70,21 @@
 
 		var self = this;
 
+		img.onerror = function()
+		{
+			self._imgContainer = this;
+			self._loadError = true;
+			
+			document.body.removeChild(canvas);
+			
+			self._imgTag ?
+				self._element.src = self._url :
+					self._element.style.backgroundImage = 'url(' + self._url + ')';
+					
+			return self._callback();
+			
+		};
+
 		img.onload = function()
 		{
 			self._imgContainer = this;
@@ -76,6 +94,13 @@
 
 			canvas.setAttribute('width', iw);
 			canvas.setAttribute('height', ih);
+			canvas.setAttribute('style',
+				'image-rendering: optimizeSpeed;' + 
+				'image-rendering: -moz-crisp-edges;' +
+			    	'image-rendering: -webkit-optimize-contrast;' +
+			    	'image-rendering: optimize-contrast;' +
+			    	'-ms-interpolation-mode: nearest-neighbor;'
+			);
 
 			canvas = document.body.appendChild(canvas);
 
