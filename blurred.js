@@ -82,7 +82,6 @@
 					self._element.style.backgroundImage = 'url(' + self._url + ')';
 					
 			return self._callback();
-			
 		};
 
 		img.onload = function()
