@@ -66,8 +66,6 @@
 
 		var img = new Image();
 		img.crossOrigin = 'Anonymous';
-		img.src = this._url;
-
 		var self = this;
 
 		img.onerror = function()
@@ -136,6 +134,8 @@
 
 			return self._callback();
 		};
+		
+		img.src = this._url;
 	};
 
 	Blurred.prototype.getProps = function(obj) {
